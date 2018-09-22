@@ -21,7 +21,7 @@ class Server : public QObject
 {
     Q_OBJECT
 public:
-    explicit Server(QObject *parent = nullptr);
+    explicit Server(int port, QObject *parent = nullptr);
 
     void reciveAIntention(QNetworkDatagram *datagram);
 

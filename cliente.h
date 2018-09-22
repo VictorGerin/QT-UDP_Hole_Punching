@@ -6,14 +6,13 @@
 #include <QNetworkDatagram>
 #include <QDataStream>
 #include <QNetworkInterface>
-#include <QEventLoop>
 #include <QThread>
 
 class Cliente : public QObject
 {
     Q_OBJECT
 public:
-    explicit Cliente(QObject *parent = nullptr);
+    explicit Cliente(QString ip, int port, QObject *parent = nullptr);
 
     void registerIntention(QNetworkDatagram *datagram);
 

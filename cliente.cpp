@@ -1,12 +1,12 @@
 #include "cliente.h"
 
-Cliente::Cliente(QObject *parent) : QObject(parent)
+Cliente::Cliente(QString ip, int port, QObject *parent) : QObject(parent)
 {
     qDebug() << "Init Client";
     in_sok = new QUdpSocket(this);
 
-    this->addr = QHostAddress("192.168.0.15");
-    porta = 7755;
+    this->addr = QHostAddress(ip);
+    porta = port;
 
     registerIntention(0);
     connect(in_sok, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
@@ -50,10 +50,6 @@ void Cliente::reciveEndpoint(QNetworkDatagram *datagram) {
 
     QByteArray _bytes = datagram->data();
     QDataStream in(&_bytes, QIODevice::ReadOnly);
-
-//    qDebug() << _bytes;
-//    qDebug(_bytes);
-//    return;
 
     in.skipRawData(2);
 

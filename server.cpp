@@ -1,11 +1,11 @@
 #include "server.h"
 #include <QDebug>
 
-Server::Server(QObject *parent) : QObject(parent)
+Server::Server(int port, QObject *parent) : QObject(parent)
 {
     qDebug() << "Init Server";
     in_sok = new QUdpSocket(this);
-    in_sok->bind(QHostAddress::Any, 7755);
+    in_sok->bind(QHostAddress::Any, port);
 
     connect(in_sok, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
 }
@@ -17,6 +17,7 @@ void Server::reciveAIntention(QNetworkDatagram *datagram)
     QDataStream out(&bytes, QIODevice::ReadWrite);
     QByteArray _bytes = datagram->data();
     QDataStream in(&_bytes, QIODevice::ReadOnly);
+    QString nome;
 
     in >> temp; //Ignora o primeiro byte
     in >> temp;
@@ -32,8 +33,9 @@ void Server::reciveAIntention(QNetworkDatagram *datagram)
         in >> _ip;
         quint16 porta;
         in >> porta;
+        in >> nome;
 
-        qDebug() << QHostAddress(_ip) << porta;
+        qDebug() << QHostAddress(_ip) << porta << nome;
 
         if(!this->first) {
             this->first = (Client *) malloc(sizeof(Client));
