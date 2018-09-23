@@ -13,15 +13,28 @@ The arent prerequisites to use the AppImage version, but if you want download th
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+To teste you will need at least one computer to be a server and two to be a client all can be made using the VirtualBox, in my case i have create 2 virtual machine behind NAT and use my own computer as server.
 
-### Break down into end to end tests
-
-Explain what these tests test and why
+To start the Server just type the command, i have choose 12345 as listen UDP port but you can use any port that you want
 
 ```
-Give an example
+$ ./UDP -s --port 12345
 ```
+
+Now to start the client you just do the folow command remenber that the IP set must be the server IP and the port must be the same used by the server
+
+```
+$ ./UDP -c --ip 192.168.0.15 --port 12345
+```
+
+If all go rigth you will see a menssage, like the image below
+
+```
+Teste : "Testando que foda isso veii :)"
+```
+
+![alt text](http://url/to/img.png)
+
 
 ## Built With
 
@@ -39,4 +52,6 @@ This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Bryan Ford (http://www.brynosaurus.com/pub/net/p2pnat/)
+* Pyda Srisuresh (Caymas Systems, Inc)
+* Dan Kegel (dank (at) kegel.com)
 
