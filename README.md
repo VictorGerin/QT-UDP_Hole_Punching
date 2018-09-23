@@ -1,10 +1,42 @@
 # QT-UDP_Hole_Punching
 
 QT UDP Hole Puching is a test project try to teste the tecnic called UDP Hole Puching there are better describe in this link http://www.brynosaurus.com/pub/net/p2pnat/.
+This is only a proof of concept of UDP hole punch a tecnique that allow 2 computers behind NATs comunicate with outer direct.
 
-This project is very simple and is a proof of concept so there dont have any real use.
+## Getting Started
 
-To teste you only need the AppImage aplication and the program has two mode to run a server mode and a client the client need the server to connect with outer client.
+To teste just get the newest version with AppImage https://github.com/VictorGerin/QT-UDP_Hole_Punching/releases
 
-To Start as Server or Client just use the option --server or --client, both, can set the UDP port with the option --port the default value is 7755 and the client can configure the ip os rendezvous server with the option --ip
+### Prerequisites
+
+The arent prerequisites to use the AppImage version, but if you want download the code and compile you can use the QTCreator to do that it have all depedences.
+
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Built With
+
+* [QT](http://doc.qt.io/) - The C++ framework used
+
+
+## Authors
+
+* **Victor Lacerda** - [QT-UDP_Hole_Punching](https://github.com/VictorGerin)
+
+## License
+
+This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Bryan Ford (http://www.brynosaurus.com/pub/net/p2pnat/)
 

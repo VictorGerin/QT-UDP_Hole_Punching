@@ -38,6 +38,8 @@ int main(int argc, char *argv[])
         Cliente *c = new Cliente(parser.value("ip"), parser.value("port").toInt());
     } else if(parser.isSet("server")) {
         Server *s = new Server(parser.value("port").toInt());
+    } else {
+        parser.showHelp();
     }
 
     return a.exec();
