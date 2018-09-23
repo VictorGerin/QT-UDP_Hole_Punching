@@ -27,13 +27,13 @@ Now to start the client you just do the folow command remenber that the IP set m
 $ ./UDP -c --ip 192.168.0.15 --port 12345
 ```
 
-If all go rigth you will see a menssage, like this ![Image](https://raw.githubusercontent.com/VictorGerin/QT-UDP_Hole_Punching/master/Screenshot%20from%202018-09-23%2014-50-03.png)
+If all go rigth you will see a menssage, like the image below
 
 ```
 Teste : "Testando que foda isso veii :)"
 ```
 
-
+![Image](https://raw.githubusercontent.com/VictorGerin/QT-UDP_Hole_Punching/master/Screenshot%20from%202018-09-23%2014-50-03.png)
 
 
 ## Built With
