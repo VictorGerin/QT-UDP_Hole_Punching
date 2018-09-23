@@ -43,7 +43,7 @@ Teste : "Testando que foda isso veii :)"
 
 ## Authors
 
-* **Victor Lacerda** - [QT-UDP_Hole_Punching](https://github.com/VictorGerin)
+* **Victor Lacerda** - [VictorGerin](https://github.com/VictorGerin)
 
 ## License
 
@@ -51,7 +51,7 @@ This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Bryan Ford (http://www.brynosaurus.com/pub/net/p2pnat/)
+* Bryan Ford (Massachusetts Institute of Technology)
 * Pyda Srisuresh (Caymas Systems, Inc)
 * Dan Kegel (dank (at) kegel.com)
 
