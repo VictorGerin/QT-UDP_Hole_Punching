@@ -1,7 +1,7 @@
 # QT-UDP_Hole_Punching
 
 QT UDP Hole Puching is a test project try to teste the tecnic called UDP Hole Puching there are better describe in this link http://www.brynosaurus.com/pub/net/p2pnat/.
-This is only a proof of concept of UDP hole punch a tecnique that allow 2 computers behind NATs comunicate with outer direct.
+This is only a proof of concept of UDP hole punch a tecnique that allow 2 computers behind NATs comunicate with other direct.
 
 The bigs new now is there no need to create you own rendezvous server is possible do tha same with public STUN and Torrent Tracker Servers
 
@@ -11,7 +11,7 @@ public.popcorn-tracker.org:6969
 And as STUN i'm using
 iphone-stun.strato-iphone.de:3478
 
-both are publics servers with good responce if you want use outer check on google is easy find lists of this kind server.
+both are publics servers with good responce if you want use other check on google is easy find lists of this kind server.
 
 ## Getting Started
 
