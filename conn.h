@@ -143,7 +143,9 @@ public:
      */
     void startConn();
 
-    QUdpSocket *getSock() const;
+    StunClient *getSock() const;
+    QList<EndPointModel> getEndpoints() const;
+    quint32 getTimer_interval() const;
 
 signals:
     void update();
@@ -154,14 +156,16 @@ public slots:
      * Makes a annouce to the tracker server and updates the enpoint list
      */
     void announce();
+    void announce(quint8 room_id[20]);
 
 private:
     StunClient *sock;
     quint16 port;
     QHostAddress host;
-    QList<EndPoint> endpoints;
-    QTimer announce_timer;
+    QList<EndPointModel> endpoints;
     quint64 connection_id = 0;
+    quint32 timer_interval;
+    quint8 currentRoomId[20];
 };
 
 #endif // CONN_H

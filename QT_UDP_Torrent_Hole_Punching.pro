@@ -18,8 +18,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     conn.cpp \
-    stunclient.cpp
+    stunclient.cpp \
+    testeclass.cpp \
+    models/stunattributemodel.cpp \
+    models/mappedaddressmodel.cpp \
+    models/addressmodel.cpp \
+    models/endpointmodel.cpp \
+    models/stunheadermodel.cpp
 
 HEADERS += \
     conn.h \
-    stunclient.h
+    stunclient.h \
+    testeclass.h \
+    models/stunattributemodel.h \
+    models/mappedaddressmodel.h \
+    models/addressmodel.h \
+    models/endpointmodel.h \
+    models/stunheadermodel.h
+
+DISTFILES +=

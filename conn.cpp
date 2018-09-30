@@ -10,9 +10,10 @@ Conn::Conn(QHostAddress host, quint16 port, QObject *parent) : QObject(parent)
 
     qDebug() << host << port;
 
-    connect(this, SIGNAL(update()), this, SLOT(sendTest()));
-    //connect the re-annouce timer
-    connect(&announce_timer, SIGNAL(timeout()), this, SLOT(announce()));
+    //set a random room_id
+    for(uint i = 0 ; i < sizeof (currentRoomId) ;i++) {
+        currentRoomId[i] = static_cast<quint8>(qrand());
+    }
 }
 
 Conn::Conn(const QString &url, QObject *parent) : Conn(
@@ -54,14 +55,15 @@ void Conn::startConn()
 
     //configure the connection_id recive
     connection_id = response.responce.connection_id;
-
-    //Start the annouce timer
-    connect(sock, SIGNAL(readyRead()), this, SLOT(receber()));
-    announce_timer.setInterval(1 * 1000);
-    announce_timer.start();
 }
 
+
 void Conn::announce()
+{
+    return announce(currentRoomId);
+}
+
+void Conn::announce(quint8 room_id[])
 {
     //Create a annouce packege
     struct Announce annou;
@@ -76,7 +78,9 @@ void Conn::announce()
     //Create a random number
     annou.conn.request.transaction_id = __bswap_32(1212);
     //Set a easy configure room id
-    memset(annou.info_hash, 18, 20);
+    memcpy(annou.info_hash, room_id, 20);
+    memcpy(currentRoomId, annou.info_hash, 20);
+//    memset(annou.info_hash, 20, 20);
     //Set a random peer_id
     memset(annou.peer_id, 0, 20);
     //useless configuration
@@ -114,12 +118,12 @@ void Conn::announce()
     //Verify if the recive transaction id is the same
     if(resp.transaction_id != annou.conn.request.transaction_id) {
         qDebug() << "Error !!!!!!!!!";
+        qDebug() << data;
         return;
     }
 
     //Configure the update timer with the time recive by the server
-    announce_timer.setInterval(static_cast<int>(resp.interval) * 1000);
-
+    timer_interval = resp.interval * 1000; //store in millis seconds
 
     //Clear the endpoint list
     endpoints.clear();
@@ -145,7 +149,7 @@ void Conn::announce()
         //The next 2 bytes is the udp port
         quint16 *porta = reinterpret_cast<quint16*>(baseAddr + (i * endpoint_size) + sizeof(IPv4));
 
-        EndPoint end;
+        EndPointModel end;
         //Fix the byte order and store the result
         end.address.ipv4.num = __bswap_32(ip->num);
         end.port = __bswap_16(*porta);
@@ -156,7 +160,17 @@ void Conn::announce()
     emit update();
 }
 
-QUdpSocket *Conn::getSock() const
+quint32 Conn::getTimer_interval() const
+{
+    return timer_interval;
+}
+
+QList<EndPointModel> Conn::getEndpoints() const
+{
+    return endpoints;
+}
+
+StunClient *Conn::getSock() const
 {
     return sock;
 }

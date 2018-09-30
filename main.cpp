@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 
-#include "conn.h"
+#include "testeclass.h"
 
 
 /*
@@ -25,8 +25,10 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Conn c("udp://public.popcorn-tracker.org:6969");
-    c.startConn();
+    new TesteClass();
+
+//    Conn c("udp://public.popcorn-tracker.org:6969");
+//    c.startConn();
 
     return a.exec();
 }

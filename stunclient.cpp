@@ -22,7 +22,7 @@ StunClient::StunClient(const QString &url, QObject *parent) : StunClient(
 void StunClient::binding()
 {
     //Create a header
-    STUN_header header = genHeader();
+    StunHeaderModel header = genHeader();
     //Set binding method
     header.Message_Type = __bswap_16(0x0001);
 
@@ -35,7 +35,7 @@ void StunClient::binding()
     timer.setSingleShot(true);
     timer.setInterval(3 * 1000);
 
-    //have recive something
+    //if ... have recive something
     connect(this, &QUdpSocket::readyRead, &blocking, &QEventLoop::quit);
     //or the timeout ocurrs
     connect(&timer, &QTimer::timeout, &blocking, &QEventLoop::quit);
@@ -47,7 +47,7 @@ void StunClient::binding()
     //Read data end populate the Stun recive header
     QNetworkDatagram datagram = receiveDatagram();
     QByteArray data = datagram.data();
-    STUN_header header_recived;
+    StunHeaderModel header_recived;
     memcpy(reinterpret_cast<void *>(&header_recived), static_cast<void *>(data.data()), sizeof (header_recived));
     header_recived.Message_Type = __bswap_16(header_recived.Message_Type);
     header_recived.Message_Len = __bswap_16(header_recived.Message_Len);
@@ -71,7 +71,7 @@ void StunClient::binding()
     decodeRecive(data);
 
     //show the update public endpoint
-    MappedAddress *attr = reinterpret_cast<MappedAddress *>(currentAtributes[0]);
+    MappedAddressModel *attr = reinterpret_cast<MappedAddressModel *>(currentAtributes[0]);
     qDebug() << QHostAddress(attr->point.address.ipv4.num) << attr->point.port;
 
     //emit the updated signal
@@ -79,8 +79,8 @@ void StunClient::binding()
 
 }
 
-STUN_header StunClient::genHeader() {
-    STUN_header temp;
+StunHeaderModel StunClient::genHeader() {
+    StunHeaderModel temp;
     /*
      * Create a header with a random trasaction ID
      */
@@ -105,16 +105,16 @@ void StunClient::decodeRecive(QByteArray data)
 
     //Calculate the start addres of the Stun atributes
     char *initData = static_cast<char*>(data.data());
-    initData = initData + sizeof(STUN_header);
+    initData = initData + sizeof(StunHeaderModel);
 
     //Re create the Stun header recived
-    STUN_header header_recived;
+    StunHeaderModel header_recived;
     memcpy(reinterpret_cast<void *>(&header_recived), static_cast<void *>(data.data()), sizeof (header_recived));
     header_recived.Message_Type = __bswap_16(header_recived.Message_Type);
     header_recived.Message_Len = __bswap_16(header_recived.Message_Len);
 
     //Each loop attr must point to the next atribute to be readed
-    StunAtribute *attr = reinterpret_cast<StunAtribute *>(initData);
+    StunAttributeModel *attr = reinterpret_cast<StunAttributeModel *>(initData);
 
     //Stop when the ammount of bytes readed is more or equals if the Message len
     while(reinterpret_cast<char*>(attr) - initData < header_recived.Message_Len) {
@@ -125,9 +125,9 @@ void StunClient::decodeRecive(QByteArray data)
         //Type 0x0001 is MappedAddress
         if(attr->type == 0x0001) {
             //Create a new attribute to be iserted in the list
-            MappedAddress *map = new MappedAddress;
+            MappedAddressModel *map = new MappedAddressModel;
             //Copy the content from the recive array
-            memcpy(map, attr, sizeof (MappedAddress));
+            memcpy(map, attr, sizeof (MappedAddressModel));
 
             //Fix the byte order
             map->point.port = __bswap_16(map->point.port);
@@ -159,10 +159,10 @@ void StunClient::decodeRecive(QByteArray data)
         } else if(attr->type == 0x0020 || attr->type == 0x8020) {
             //As XOR-MAPPED-ADDRESS is the same of MappedAddress
             //so to facilitate the things i have use the same class
-            MappedAddress *map = new MappedAddress;
+            MappedAddressModel *map = new MappedAddressModel;
 
             //Copy the content from the recive array
-            memcpy(map, attr, sizeof (MappedAddress));
+            memcpy(map, attr, sizeof (MappedAddressModel));
 
             //Fix the byte order
             map->family = __bswap_16(map->family);
@@ -191,7 +191,7 @@ void StunClient::decodeRecive(QByteArray data)
             currentAtributes << map;
         }
 
-        attr = reinterpret_cast<StunAtribute *>(reinterpret_cast<char *>(attr) + attr->len + sizeof (StunAtribute));
+        attr = reinterpret_cast<StunAttributeModel *>(reinterpret_cast<char *>(attr) + attr->len + sizeof (StunAttributeModel));
     }
 
 }
@@ -201,7 +201,7 @@ void StunClient::timerEvent(QTimerEvent */*event*/)
     binding();
 }
 
-EndPoint StunClient::getCurrent_addr() const
+EndPointModel StunClient::getCurrent_addr() const
 {
     return current_addr;
 }
