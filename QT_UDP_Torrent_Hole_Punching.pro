@@ -24,7 +24,8 @@ SOURCES += \
     models/addressmodel.cpp \
     models/endpointmodel.cpp \
     models/stunheadermodel.cpp \
-    test/testeclass.cpp
+    test/testeclass.cpp \
+    stunclient.cpp
 
 HEADERS += \
     conn.h \
