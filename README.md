@@ -7,6 +7,7 @@ The bigs new now is there no need to create you own rendezvous server is possibl
 
 As torrent Tracker i'm using
 public.popcorn-tracker.org:6969
+
 And as STUN i'm using
 iphone-stun.strato-iphone.de:3478
 
