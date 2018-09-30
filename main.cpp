@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 
-#include "testeclass.h"
+#include "test/testeclass.h"
 
 
 /*

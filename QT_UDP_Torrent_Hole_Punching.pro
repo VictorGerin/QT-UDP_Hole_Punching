@@ -15,26 +15,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-        main.cpp \
-    conn.cpp \
-    testeclass.cpp \
-    models/stunattributemodel.cpp \
-    models/mappedaddressmodel.cpp \
-    models/addressmodel.cpp \
-    models/endpointmodel.cpp \
-    models/stunheadermodel.cpp \
-    test/testeclass.cpp \
-    stunclient.cpp
-
-HEADERS += \
-    conn.h \
-    stunclient.h \
-    models/stunattributemodel.h \
-    models/mappedaddressmodel.h \
-    models/addressmodel.h \
-    models/endpointmodel.h \
-    models/stunheadermodel.h \
-    test/testeclass.h
 
 DISTFILES +=
+
+HEADERS += \
+    models/addressmodel.h \
+    models/endpointmodel.h \
+    models/mappedaddressmodel.h \
+    models/stunattributemodel.h \
+    models/stunheadermodel.h \
+    test/testeclass.h \
+    conn.h \
+    stunclient.h
+
+SOURCES += \
+    models/addressmodel.cpp \
+    models/endpointmodel.cpp \
+    models/mappedaddressmodel.cpp \
+    models/stunattributemodel.cpp \
+    models/stunheadermodel.cpp \
+    test/testeclass.cpp \
+    conn.cpp \
+    main.cpp \
+    stunclient.cpp
+
