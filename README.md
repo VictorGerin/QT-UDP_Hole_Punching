@@ -3,38 +3,38 @@
 QT UDP Hole Puching is a test project try to teste the tecnic called UDP Hole Puching there are better describe in this link http://www.brynosaurus.com/pub/net/p2pnat/.
 This is only a proof of concept of UDP hole punch a tecnique that allow 2 computers behind NATs comunicate with outer direct.
 
+The bigs new now is there no need to create you own rendezvous server is possible do tha same with public STUN and Torrent Tracker Servers
+
+As torrent Tracker i'm using
+public.popcorn-tracker.org:6969
+And as STUN i'm using
+iphone-stun.strato-iphone.de:3478
+
+both are publics servers with good responce if you want use outer check on google is easy find lists of this kind server.
+
 ## Getting Started
 
-To teste just get the newest version with AppImage https://github.com/VictorGerin/QT-UDP_Hole_Punching/releases
+This current master version don't have a appimage version.
+Just download the project and open the project with QT creator
 
 ### Prerequisites
 
-The arent prerequisites to use the AppImage version, but if you want download the code and compile you can use the QTCreator to do that it have all depedences.
+Is need the QT creator version 5.10 or grater with C++14
 
 ## Running the tests
 
-To teste you will need at least one computer to be a server and two to be a client all can be made using the VirtualBox, in my case i have create 2 virtual machine behind NAT and use my own computer as server.
+After download the project and open with QT creator go to the testeclass.cpp there you will see a small use example of the project
 
-To start the Server just type the command, i have choose 12345 as listen UDP port but you can use any port that you want
+The ideia is simple use a STUN serve to get the current public endpoint (ip + upd port) and make public on a torrent Tracker.
 
-```
-$ ./UDP -s --port 12345
-```
+You will see in the TesteClass constructor a signal and slot
+connect(connection, &Conn::update, this, &TesteClass::sendToAllPeopleInRoom);
 
-Now to start the client you just do the folow command remenber that the IP set must be the server IP and the port must be the same used by the server
+This is a very import signal send from the Conn class, the update signal is send
+whatever a annouce response is recive from the Torrent Tracker, with that you can
+get the newest updated list of endpoints on the current "Torrent room" the only problem is that list includes your current endpoint is included so you need to ignore your self using the information from the StunClient.
 
-```
-$ ./UDP -c --ip 192.168.0.15 --port 12345
-```
-
-If all go rigth you will see a menssage, like the image below
-
-```
-Teste : "Testando que foda isso veii :)"
-```
-
-![Image](https://raw.githubusercontent.com/VictorGerin/QT-UDP_Hole_Punching/master/Screenshot%20from%202018-09-23%2014-50-03.png)
-
+Another problem is the QUdpSocket must be shared between the StunClient, Torrent Tracker and your implementation, because that when you create your own implementation you can't send and recive at the same time with annouce on the tracker.
 
 ## Built With
 
@@ -47,7 +47,7 @@ Teste : "Testando que foda isso veii :)"
 
 ## License
 
-This project is licensed under the GNU License - see the [LICENSE](LICENSE.md) file for details
+This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
